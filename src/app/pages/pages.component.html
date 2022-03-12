@@ -1,0 +1,169 @@
+<div id="main">
+
+ 
+
+  <!-- Start: Header -->
+  <header class="navbar navbar-fixed-top navbar-shadow ">
+    <div class="navbar-branding">
+      
+     <span id="toggle_sidemenu_l" >  <i class="ad ad-lines" style="color: white;"></i> </span>
+   
+     
+
+    </div>
+    <ul class="nav navbar-nav navbar-left">
+      <img src="../../assets/img/LogoVT.png"
+     class="icon_orange">
+      <span class="Kaabu-Mobile">
+       Visite Technique
+      </span>
+     <!-- <li class="hidden-xs">
+        <a class="request-fullscreen toggle-active">
+          <span class="ad ad-screen-full fs18"></span>
+        </a>
+      </li>-->
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      
+  
+
+
+      <li class="dropdown menu-merge">
+        <input class="bar_search" type="text" placeholder="Rechercher...">
+        <span class="user_nom_prenom">{{user.prenom}} {{user.nom}}</span>
+        <span class="fa fa fa-user icon_user "  (click)="logout()" style="cursor: pointer;"></span>
+      </li>
+    </ul>
+  </header>
+  <!-- End: Header -->
+
+  <!-- Start: Sidebar -->
+  <aside id="sidebar_left" class="nano nano-light affix" style="position: fixed;">
+    <!-- Start: Sidebar Left Content -->
+    <div class="sidebar-left-content nano-content">
+      <!-- Start: Sidebar Menu -->
+      <ul class="nav sidebar-menu">
+        <li>
+          <a class="accordion-toggle" style="height: 50px;">
+            <img src="../../assets/maquette/icn-dashboard.png" class="icone_side">
+            <!--<span class="sidebar-title">Ressources</span>-->
+            <span class="caret"></span>
+          </a>
+        </li>
+       
+        <li>
+          <a class="accordion-toggle" style="height: 50px;" >
+            <span >  <i class="fa fa-list" style="color: white;"></i> </span>
+            <span class="sidebar-title" >Liste des Demandes</span>
+            <span class="caret"></span>
+          </a>
+          <ul class="nav sub-nav" id="collapseOne">
+            <li style="cursor: pointer;">
+              <a class="accordion-toggle" style="cursor: pointer;" routerLinkActive="active" (click)="refresh()"  >
+                <span class="fa fa fa-folder-open-o"></span>Liste des Demandes
+              </a>
+            </li>
+            
+          </ul>
+        </li>
+        <li *ngIf="this.lienBO==false">
+          <a class="accordion-toggle" style="height: 50px;" >
+            <span  >  <i class="fa fa-group " style="color: white;"></i> </span>
+            
+            <span class="sidebar-title">Gestion des utilisateurs</span>
+            <span class="caret"></span>
+          </a>
+          <ul class="nav sub-nav" id="collapseTwo">
+            <li>
+              <a class="accordion-toggle" routerLinkActive="active" [routerLink]="'/user'">
+                <span class="fa fa-group"></span>Liste des Utilisateurs
+              </a>
+            </li>
+            <li>
+              <a class="accordion-toggle" routerLinkActive="active" [routerLink]="'/import-users'">
+                <span class="fa fa fa-wrench"></span>Import des utilisateurs en masse
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li *ngIf="this.lienBO==false">
+          <a class="accordion-toggle" style="height: 50px;" >
+            <img src="../../assets/maquette/icn-settings-copy-2.png" class="icone_side">
+            <span class="sidebar-title">Parametrage</span>
+            <span class="caret"></span>
+          </a>
+          <ul class="nav sub-nav" id="collapseThree">
+            <li>
+              <a class="accordion-toggle" routerLinkActive="active" [routerLink]="'/ka_role'">
+                <span class="fa fa fa-wrench"></span>Type de paiement
+              </a>
+            </li>
+            <li>
+              <a class="accordion-toggle" routerLinkActive="active" [routerLink]="'/ka_operation'">
+                <span class="fa fa fa-exchange"></span>Type de categorie
+              </a>
+            </li>
+            <li>
+              <a class="accordion-toggle" routerLinkActive="active" [routerLink]="'/ka_profil'">
+                <span class="fa fa fa-user"></span>Type de contrôle
+              </a>
+            </li>
+            <li>
+              <a class="accordion-toggle" routerLinkActive="active" [routerLink]="'/ka_type_commentaire'">
+                <span class="fa fa fa-comment"></span>Type de document
+              </a>
+            </li>
+            <li>
+              <a class="accordion-toggle" routerLinkActive="active" [routerLink]="'/ka_version'">
+                <span class="fa fa fa-code-fork"></span>Liste de chauffeur
+              </a>
+            </li>
+            <li>
+              <a class="accordion-toggle" routerLinkActive="active" [routerLink]="'/ka_agence'">
+                <span class="fa fa fa-building "></span>Type de produit
+              </a>
+            </li>
+            <li>
+              <a class="accordion-toggle" routerLinkActive="active" [routerLink]="'/ka_agence'">
+                <span class="fa fa fa-building "></span>Crud de chauffeur
+              </a>
+            </li>
+            
+          </ul>
+        </li>
+      </ul>
+      <!-- End: Sidebar Menu -->
+      <!-- Start: Sidebar Collapse Button -->
+      <div class="sidebar-toggle-mini">
+        <a>
+          <span class="fa fa-sign-out" (click)="retour()" ></span>
+        </a>
+      </div>
+      <!-- End: Sidebar Collapse Button -->
+    </div>
+    <!-- End: Sidebar Left Content -->
+  </aside>
+  <!-- End: Sidebar Left -->
+
+  <!-- Start: Content-Wrapper -->
+  <section id="content_wrapper">
+    <!-- Begin: Content -->
+    <section id="content" class="table-layout animated fadeIn" style="margin-top: 0px;">
+        <router-outlet></router-outlet>
+    </section>
+    <!-- End: Content -->
+    <!-- Begin: Page Footer -->
+   <!-- <footer id="content-footer" class="affix">
+      <div class="row">
+        <div class="col-md-6">
+          <span class="footer-legal">© {{DateNow}} ORANGE-SENEGAL</span>
+        </div>
+      </div>
+    </footer>-->
+    <!-- End: Page Footer -->
+  </section>
+  <!-- End: Content-Wrapper -->
+
+ 
+
+</div>

@@ -1,0 +1,382 @@
+<div class="Dashboard-Liste-do2 ">
+  <i  style="font-size: 15px; margin-right: 10px; color: black; cursor: pointer;" (click)="addNewItem(false)"  class="fa fa-arrow-left" ></i>
+  <span class="text-style-1">Gestion des utilisateurs</span><span class="text-style-2">\</span><span  class="text-style-1">Liste dossiers</span><span class="text-style-2">\</span>{{this.collection.id}}
+  
+</div>
+<div class="first_div_detail">
+  <div>
+    <span class="info_vente">Info Vente {{collection.referenceFacture}}</span>
+    <span class="etat_dossier">{{getOriginalEtat(collection.etat)}}</span>
+  </div>
+  <table class="tableau_detail">
+    <tr class="title_tableau">
+      <td  style="padding: 0px 20px 9px 0px;">Type</td>
+      <td>Mode de collecte</td>
+      <td>Zone</td>
+      <td>Reçu le </td>
+      <td>Mise à jour</td>
+      <td>Maniére de Remplissage</td>
+    </tr>
+    <tr class="body_tableau">
+      <td style="padding: 0px 20px 9px 0px;">{{getOperationLabelle(collection.operation)}}<span *ngIf="collection.avecOM==true">+OM</span></td>
+      <td>SMARTPHONE</td>
+      <td>N/A</td>
+      <td>{{collection.dateRecu}}</td>
+      <td>{{collection.dateModification}}</td>
+      <td>{{collection.typeRemplissage}}</td>
+    
+    </tr>
+  </table>
+</div>
+<div class="second_div_detail">
+  <div class="panel panel-primary col-md-4">
+    <div class=" entete_detail"><span class="panel-title">Details de la demande</span></div>
+    <div class="panel-body" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+      <h4 class="client_sim">Client</h4>
+      <div class="row">
+        <div class=" col-md-12">
+          <label class="col-md-6 libelle">Nom :</label>
+          <label class="col-md-6 value"> {{collection.nom}}</label>
+        </div>
+        <br>
+        <div class=" col-md-12">
+          <label class="col-md-6 libelle">Prenom :</label>
+          <label class="col-md-6 value"> {{collection.prenom}}</label>
+        </div>
+        <br>
+        <div class=" col-md-12">
+          <label class="col-md-6 libelle">Date de naissance :</label>
+          <label class="col-md-6 value"> {{collection.dateNaissance}}</label>
+        </div>
+        <br>
+        <div class=" col-md-12">
+          <label class="col-md-6 libelle">Lieu de naissance :</label>
+          <label class="col-md-6 value"> {{collection.lieuNaissance}}</label>
+        </div>
+        <br>
+        <div class=" col-md-12">
+          <label class="col-md-6 libelle">Type de pièce :</label>
+          <label class="col-md-6 value"> {{getNomTypePiece(collection.typePiece)}}</label>
+        </div>
+        <div class=" col-md-12">
+          <label class="col-md-6 libelle">Numéro de pièce :</label>
+          <label class="col-md-6 value"> {{collection.numeroPiece}}</label>
+        </div>
+        
+        <br>
+        <div class=" col-md-12">
+          <label class="col-md-6 libelle">Date délivrance :</label>
+          <label class="col-md-6 value"> {{collection.dateDelivrance}}</label>
+        </div>
+        <br>
+        <div class=" col-md-12">
+          <label class="col-md-6 libelle">Date d'expiration :</label>
+          <label class="col-md-6 value"> {{collection.dateExpiration}}</label>
+        </div>
+        <br>
+        <div class=" col-md-12">
+          <label class="col-md-6 libelle">Email :</label>
+          <label class="col-md-6 value"> {{collection.email}}</label>
+        </div>
+        <br>
+        <div class=" col-md-12">
+          <label class="col-md-6 libelle">Adresse :</label>
+          <label class="col-md-6 value"> {{collection.adresse}}</label>
+        </div>
+        <br>
+      </div>
+      <h4 class="client_sim">SIM</h4>
+      <div class=" col-md-12">
+        <label class="col-md-6 libelle">MSISDN :</label>
+        <label class="col-md-6 value">{{collection.msisdn ? collection.msisdn : 'N/A'}} </label>
+      </div>
+      <br>
+      <div class=" col-md-12">
+        <label class="col-md-6 libelle">IMSI :</label>
+        <label class="col-md-6 value"> {{collection.imsi}}</label>
+      </div>
+      <br>
+      <div class="col-md-12" *ngIf="photoSignature && photoSignature.type">
+        <div class="col-md-6 photo_signature"  >
+          <h4 class="client_sim" style="margin-bottom: 0px;">{{photoSignature.type}}</h4>
+          <img  class="photo_signature col-md-12" [src]="urlImage(photoSignature.nom)"/>
+        </div>
+        <div class="col-md-6 photo_signature" *ngIf="collection.etat!='invalide' && (collection.avecOM==true || collection.operation=='NCOM'|| collection.operation=='UGCOM'|| collection.operation=='CNS' ) "  >
+          <h4 class="client_sim" >Télécharger</h4> 
+          <p><span class="fa fa-file-pdf-o" style="cursor: pointer; font-size: 70px;" (click)="exportpdf(collection.attestationDemande)" ></span></p>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+  <div class="panel panel-primary col-md-12" id="main-container" style="margin-bottom: 10px;">
+    <div class=" entete_detail">
+      <span class="panel-title">Pièces jointes( A verifier)</span> <a style="float: right;color: white;cursor: pointer;" (click)="onOpenModal(null,'histo')">Historique</a>
+    </div>
+    <div class="panel-body" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;height: 586px">
+      <div *ngIf="!modalPhoto">
+        <h4 class="client_sim">Carte d'identité sénégalaise</h4>
+          <div class="col-md-12" style="height: 200px;" *ngIf="collection.images">
+            <div class="col-md-6 photo_carte" *ngIf="photoRecto && photoRecto.type">
+              <label class="value col-md-12">{{photoRecto.type}} 
+                &nbsp;<i *ngIf="photoRecto.etat==1" style="font-size: 15px; margin-right: 5px; color: #32c832;" class="fa fa-check"></i>
+                <i *ngIf="photoRecto.etat==-1" style="font-size: 15px; margin-right: 5px; color: #cd3c14;" class="fa fa-close"></i>
+              </label>
+              <img (click)="ismodalPhoto(photoRecto)"  class="photo_carte col-md-12" [src]="urlImage(photoRecto.nom)"/>
+      
+            </div>
+            <div class="col-md-6 photo_carte" *ngIf="photoVerso && photoVerso.type">
+              <label class="value col-md-12">{{photoVerso?.type}}
+                &nbsp;<i *ngIf="photoVerso.etat==1" style="font-size: 15px; margin-right: 5px; color: #32c832;" class="fa fa-check"></i>
+                <i *ngIf="photoVerso.etat==-1" style="font-size: 15px; margin-right: 5px; color: #cd3c14;" class="fa fa-close"></i>
+              </label>
+              <img (click)="ismodalPhoto(photoVerso)"  class="photo_carte col-md-12" [src]="urlImage(photoVerso.nom)"/>
+            </div>
+          </div>
+         
+        </div>
+        <div class="col-md-12  div_button" *ngIf="!modalPhoto" style="top: 250px;">
+          <div class="col-md-12"  *ngIf="!estVerrouilerParOther">
+            <div class="row" *ngIf="collection.etat!=='valider' && collection.etat!=='invalider' && collection.etat!=='archiver' && collection.etat!=='encours_de_creation' && collection.etat!=='echec'" >
+              <button type="button" class="btn col-md-3  rejeter " (click)="onOpenModal(null, 'add')">
+                &nbsp;<span >Rejeter</span>
+    
+              </button> &nbsp; &nbsp;
+              <button type="button" class="btn col-md-3 col-md-offset-1 enregistrer " (click)="onOpenModal(null, 'save')">
+                &nbsp;<span >Enregistrer</span>
+              </button> &nbsp; &nbsp;
+              <button type="button" class="btn col-md-3 col-md-offset-1 valider " (click)="getValues('Valider','Êtes-vous sûr de vouloir valider ce dossier.')">
+                &nbsp;<span >Valider</span>
+              </button>
+            </div>
+            <div class="row" *ngIf="collection.etat==='valider' || collection.etat==='invalider'" >
+              <button type="button" class="btn valider  col-md-3" (click)="getValues('Archiver','Êtes-vous sûr de vouloir archiver ce dossier.')">
+                &nbsp;<span> Archiver</span>
+              </button> &nbsp; &nbsp;
+              <button type="button" class="btn col-md-3 col-md-offset-1  enregistrer " (click)="reouvrirDemande()">
+                &nbsp;<span>Réouvrir le dossier</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="modalPhoto">
+          <div class="col-md-12 photo_carte_modal"  >
+            <div class="col-md-12">
+              <button  type="button" class="btn col-md-3 tourne_photo center" (click)="changephoto(photoModal.type)">
+                &nbsp;<span class="value_photo" ><i style="font-size: 15px; margin-right: 5px;" class="fa fa-camera"></i>Voir {{photoModal.type}}</span>
+              </button>
+              <i  style="font-size: 30px;color:black;float: right;cursor:pointers;" class="fa fa-close" (click)=closeRectoVerso() ></i>
+            </div>
+            <lib-ngx-image-zoom
+            [thumbImage]="urlImage(photoModal.nom)"
+            [fullImage]="urlImage(photoModal.nom)"
+            [magnification]="1"
+            [enableScrollZoom]="true"
+            [enableLens]="true"
+            [lensWidth]="200"
+            [lensHeight]="100"
+        ></lib-ngx-image-zoom>
+          </div>
+          <div  class="col-md-12 col-md-offset-5" style="margin-top: 225px;" >
+            <button  *ngIf="collection.etat!=='valider' && collection.etat!=='invalider' && collection.etat!=='encours_de_creation' && collection.etat!=='echec'"   (click)="onOpenModal(photoModal,'rejet')"  type="button" class="btn col-md-3 annuler_modal ">
+              &nbsp;<span class="value_photo" ><i style="font-size: 15px; margin-right: 5px; color: #cd3c14;" class="fa fa-close" ></i>Rejeter</span>
+            </button>
+            <button *ngIf="collection.etat!=='valider' && collection.etat!=='invalider' && collection.etat!=='encours_de_creation' && collection.etat!=='echec'"    type="button" class="btn col-md-3 annuler_modal " type="button" class="btn col-md-3 col-md-offset-1 valider_modal" (click)="isvalidePhoto(photoModal)">
+              &nbsp;<span class="value_photo" ><i style="font-size: 15px; margin-right: 5px; color: #32c832;" class="fa fa-check"></i>Valider</span>
+            </button>
+          </div>
+        </div>      
+      </div>
+    </div>
+    
+  </div>
+  <div class=" col-md-12 barre_suivante"  (click)="suivantPage()" style="cursor: pointer;">
+    <span class="text_suivant">Dossier suivant</span>
+    <span class="fa fa-angle-down icon_suivant"></span>
+  </div>
+</div>
+
+
+
+<div  class="modal fade modal" id="addAdminBySuperadminModal" tabindex="-1" role="dialog" aria-labelledby="addAdminBySuperadminModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 20px;">
+      <div class="modal-header">
+        <h5 style=" display: contents;" class="modal-title" id="addAdminBySuperadminModalLabel">Rejeter la demande</h5>
+        <button type="button button_header" class="close" data-dismiss="modal" aria-label="Close">
+          <span style="font-size: 30px;color: white;" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <span class="message_modal">Vous êtes sur le point de rejeter ce dossier!</span>
+        <br>
+        <br>
+        <div style="padding-left: 0px;" class="col-md-12">
+          <div class="col-md-6 " style="padding-left: 0px;">
+            <label class="form-control-label-modal" >Motif du rejet</label>
+            <ng-select [items]="motifs" bindLabel="nomMotif" placeholder="Select item" appendTo="body" [(ngModel)]="collection.motif"></ng-select>
+          </div>
+          <div class="col-md-6 " style="padding-right: 0px;">
+            <label class="form-control-label-modal" >Commentaire</label>
+            <ng-select [items]="typeCommentaires" bindLabel="commentaire" placeholder="Select item" appendTo="body" [(ngModel)]="collection.typeCommentaire"></ng-select>
+          </div>
+        </div>
+        <div>
+          <textarea
+            class="col-md-12 form-control commentaire_modal" #codademm="ngModel" type="text" rows="6" 
+            name="adcm" [(ngModel)]="collection.commentaire" placeholder="Ecrire un commentaire"
+          ></textarea>
+        </div>
+        <br>
+        <div style="background-color: white; border: none;"  class="modal-footer">
+          <div style="margin-top: 30px;" class="col-md-12 col-md-offset-6">
+            <button data-dismiss="modal" aria-label="Close"   id="rejet-demande-form" type="button" class="btn col-md-3 annuler_modal ">
+              &nbsp;<span >Annuler</span>
+            </button>
+            <button type="button" class="btn col-md-3 valider_modal" (click)="getValues('Invalider','Êtes-vous sûr de vouloir invalider ce dossier.')">
+              &nbsp;<span >Valider</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
+
+<div  class="modal fade modal" id="saveAdminBySuperadminModal" tabindex="-1" role="dialog" aria-labelledby="saveAdminBySuperadminModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 20px;">
+      <div class="modal-header">
+        <h5 style=" display: contents;" class="modal-title" id="saveAdminBySuperadminModalLabel">Enregistrer la demande</h5>
+        <button type="button button_header" class="close" data-dismiss="modal" aria-label="Close">
+          <span style="font-size: 30px;color: white;" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <span class="message_modal">Vous êtes sur le point d'enregistrer ce dossier!</span>
+        <br>
+        <br>
+        <div style="padding-left: 0px;" class="col-md-12">
+          <div class="col-md-12">
+            <label class="form-control-label-modal" >Commentaire</label>
+            <ng-select [items]="typeCommentaires" bindLabel="commentaire" placeholder="Select item" appendTo="body" [(ngModel)]="collection.typeCommentaire"></ng-select>
+          </div>
+        </div>
+        <div>
+          <textarea
+            class="col-md-12 form-control commentaire_modal" #codademm="ngModel" type="text" rows="6" 
+            name="adcm" [(ngModel)]="collection.commentaire" placeholder="Ecrire un commentaire"
+          ></textarea>
+        </div>
+        <br>
+        <div style="background-color: white; border: none;"  class="modal-footer">
+          <div style="margin-top: 30px;" class="col-md-12 col-md-offset-6">
+            <button data-dismiss="modal" aria-label="Close"   id="save-demande-form" type="button" class="btn col-md-3 annuler_modal ">
+              &nbsp;<span >Annuler</span>
+            </button>
+            <button type="button" class="btn col-md-3 valider_modal" (click)="getValues('Enregistrer','Êtes-vous sûr de vouloir enregistrer ce dossier.')">
+              &nbsp;<span >Valider</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
+
+
+
+
+<div  class="modal fade modal" id="rejetAdminBySuperadminModal" tabindex="-1" role="dialog" aria-labelledby="rejetAdminBySuperadminModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 20px;">
+      <div class="modal-header">
+        <h5 style=" display: contents;" class="modal-title" id="rejetAdminBySuperadminModalLabel">Validation Photo</h5>
+        <button type="button button_header" class="close" data-dismiss="modal" aria-label="Close">
+          <span style="font-size: 30px;color: white;" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <span class="message_modal">Vous êtes sur le point de rejeter cette photo!</span>
+        <br>
+        <br>
+        <div style="padding-left: 0px;" class="col-md-12">
+          <div class="col-md-6 " style="padding-left: 0px;">
+            <label class="form-control-label-modal" >Motif du rejet</label>
+            <ng-select [items]="motifs" bindLabel="nomMotif" placeholder="Select item" appendTo="body" [(ngModel)]="motifCourant"></ng-select>
+          </div>
+          <div class="col-md-6 " style="padding-right: 0px;">
+            <label class="form-control-label-modal" >Commentaire</label>
+            <ng-select [items]="typeCommentaires" bindLabel="commentaire" placeholder="Select item" appendTo="body" [(ngModel)]="typeCommantaireCourant"></ng-select>
+          </div>
+        </div>
+
+        <br>
+        <div style="background-color: white; border: none;"  class="modal-footer">
+          <div style="margin-top: 30px;" class="col-md-12 col-md-offset-6">
+            <button data-dismiss="modal" aria-label="Close"   id="rejet-demande-form1" type="button" class="btn col-md-3 annuler_modal ">
+              &nbsp;<span >Annuler</span>
+            </button>
+            <button type="button" class="btn col-md-3 valider_modal" (click)="isrejetPhoto(photoCourant)">
+              &nbsp;<span >Valider</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
+
+
+<div   class="modal fade modal" id="histoAdminBySuperadminModal" tabindex="-1" role="dialog" aria-labelledby="addAdminBySuperadminModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" >
+      <div class="modal-header1">
+        <h5 style=" display: contents;" class="modal-title" id="addAdminBySuperadminModalLabel">Liste Des Historiques </h5>
+        <button type="button button_header" class="close" data-dismiss="modal" aria-label="Close">
+          <span style="font-size: 30px;color: white;" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped" >
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Agent</th>
+              <th scope="col">Operation</th>
+              <th scope="col">Type Action</th>
+              <th scope="col">Motif</th>
+              <th scope="col">Type Commentaire</th>
+              <th scope="col">Commentaire</th>
+              
+            </tr>
+          </thead>
+          <tbody style="overflow: scroll;">
+            <tr *ngFor="let p of historiques | paginate: { itemsPerPage: 5, currentPage: p }">
+              <th>{{p.date}}</th>
+              <td>{{p.agent}}</td>
+              <td>{{getOperationLabelle(p.operation)}}</td>
+              <td>{{p.typeAction}}</td>
+              <td>{{p.motif}}</td>
+              <td>{{p.typeCommentaire}}</td>
+              <td>{{p.commentaire}}</td>
+           
+            </tr>
+          </tbody>
+          </table>
+
+          <div style="margin: 0 auto;
+          width: 100%; text-align: center;">
+            <pagination-controls
+            (pageChange)="p = $event" previousLabel=""  nextLabel="" directionLinks="true" autoHide="true"
+            responsive="true" 
+          ></pagination-controls>
+          </div>
+       
+      </div>
+    </div>
+  </div>
+</div>
+

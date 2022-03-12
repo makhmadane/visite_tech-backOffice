@@ -1,0 +1,227 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~animate.css/animate.min.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+span[type="button"] {
+    cursor: pointer;
+}
+.ng-select .ng-select-container{
+  
+
+    border: solid 2px #d0d2d3;
+}
+
+
+.ng-select .ng-select-container .ng-value-container .ng-input > input{
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.09px;
+    color: #999999;
+    font-family: 'Roboto', sans-serif;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder{
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.09px;
+    color: #999999;
+    font-family: 'Roboto', sans-serif;
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
+   background-color: white;
+   font-size: 14px;
+   font-weight: 500;
+   font-stretch: normal;
+   font-style: normal;
+   line-height: normal;
+   letter-spacing: 0.09px;
+   font-family: 'Roboto', sans-serif;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-label{
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.09px;
+    font-family: 'Roboto', sans-serif;
+    background-color:white;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value{
+    background-color: white;
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked{
+    background-color: black;
+    color: white;
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected, .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked{
+    background-color:white;
+    color: #ff7900;
+}
+  
+  
+  .ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+    border-color: #ff7900;
+    
+  }
+  
+
+
+  /*Calendrier*/
+ 
+
+  
+ 
+  .md-drppicker .calendar td, .md-drppicker .calendar th{
+      color: black;
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: 0.48px;
+      text-align: center;
+  }
+ .md-drppicker .calendar td.active{
+    background-color:#f16e00;
+    border-color: transparent;
+    color: #fff;
+  }
+  .md-drppicker .calendar td.active:hover{
+    background-color:#f16e00;
+    border-color: transparent;
+    color: #fff;
+  }
+  .md-drppicker  .buttons_input .btn {
+    background-color:#f16e00;
+  }
+  .md-drppicker  .buttons_input .btn:hover {
+    background-color:#f16e00;
+  }
+  
+  
+  
+  .ngx-pagination  .disabled{
+    border:  2px solid #cccccc;
+  }
+  .ngx-pagination li:last-child:not(.disabled) {
+    border:  2px solid black;
+  }
+  .ngx-pagination li:first-child:not(.disabled) {
+    border:  2px solid black;
+  }
+ 
+
+
+
+  /*TABLEAU BOOTSTRAP */
+  .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
+        padding: 9px;
+    line-height: 1.49;
+    vertical-align: middle;
+    border-top: 2px solid #ccc;
+    width: 65px;
+    height: 15px;
+    margin: 30px 6px 37px 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -0.04px;
+    color: black;
+    text-align: center;
+  }
+  .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
+        padding: 9px;
+    line-height: 1.49;
+    vertical-align: middle;
+    border-top: 2px solid #ccc;
+    width: 65px;
+    height: 15px;
+    margin: 30px 6px 37px 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -0.04px;
+ 
+    text-align: center;  color: black;
+  }
+  .ngx-pagination {
+    padding-left: 0px !important;
+    margin-top: 25px;
+  }
+  .ngx-pagination li{
+    margin: 0 16px 16px 10px;
+  }
+  
+  .ngx-pagination .current,
+  .btn-info {
+    
+    text-align: center;
+    background: black !important;  
+    color: white; 
+ 
+  }
+  
+  .ngx-pagination .current:hover {
+  
+    text-align: center;
+    background: white !important;   
+    color: black;
+    border: 1px solid black; 
+    
+  }
+  
+
+  #sidebar_left {
+    background-color: #333;
+  }
+  body.sb-l-m #sidebar_left {
+    z-index: 1028;
+    overflow: visible;
+    width: 60px;
+    height: 100%;
+    left: 0;
+    background-color: #333;
+}
+.navbar-branding {
+
+  width: 60px;
+
+}
+::ng-deep ngx-image-zoom .ngxImageZoomThumbnail { 
+  max-height: 200px;
+  max-width: 200px; 
+}
+::ng-deep ngx-image-zoom .ngxImageZoomContainer { 
+  max-height: 200px;
+  max-width: 200px; 
+}
+
+.ngxImageZoomThumbnail{
+  width: 600px!important;
+  height: 450px !important;
+  border-radius: 10px;
+  padding: 0px;
+  }
+
+
+

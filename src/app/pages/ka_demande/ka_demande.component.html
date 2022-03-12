@@ -1,0 +1,239 @@
+<div class="first_div " *ngIf="cacherDetailDemande">
+  <span class="Dashboard-Liste-do">
+    <span class="text-style-1">Gestion des utilisateurs</span><span class="text-style-2">\</span>Liste dossiers<span class="text-style-2">\</span>
+  </span>
+  <span class="Liste-des-dossiers">Liste des dossiers </span>
+  <div class="recherche">
+
+          <div class="col-md-3" style="padding-left: 0px;">
+            <label  class="form-control-label libelle-recherche">Date de création</label>
+            <div class="input-group">
+              <span class="input-group-addon icon_calendar">
+                <i class="fa fa-calendar" style="color: #ff7900; font-size: 16px"></i>
+              </span>  
+              <input type="text"  matInput
+                ngxDaterangepickerMd
+                [locale]="{applyLabel: 'Appliquer', format: 'DD-MM-YYYY'}"
+                startKey="startDate"
+                endKey="endDate"
+                [(ngModel)]="selectedCreation"
+                (datesUpdated)="datesUpdatedCreation()"
+                name="daterange"
+                class="input_date_recherche"
+                style=" border-left:none;"/>
+                
+            </div>
+          </div>
+          <div class="col-md-3" style="padding-left: 0px;">
+            <label  class="form-control-label libelle-recherche">Date de modification</label>
+            <div class="input-group">
+              <span class="input-group-addon icon_calendar">
+                <i class="fa fa-calendar" style="color: #ff7900; font-size: 16px"></i>
+              </span>  
+              <input type="text"  matInput
+              ngxDaterangepickerMd
+              [locale]="{applyLabel: 'Appliquer', format: 'DD-MM-YYYY'}"
+              startKey="startDate"
+              endKey="endDate"
+              [(ngModel)]="selectedmodif"
+              (datesUpdated)="datesUpdatedModif()"
+              name="daterange"
+              class="input_date_recherche"
+              style=" border-left:none;"/>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label  class="form-control-label libelle-recherche">Etat du dossier</label>
+            <ng-select
+              [items]="etatdossiers" bindLabel="nom"
+              placeholder="Selectionner" appendTo="body" multiple="true"
+              [(ngModel)]="etatdossiersSearch"
+            ></ng-select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-control-label libelle-recherche">Type de dossier</label>
+            <ng-select
+              [items]="typedossiers" bindLabel="nomOperation"
+              placeholder="Selectionner" appendTo="body" multiple="true"
+              [(ngModel)]="typedossiersSearch"
+            ></ng-select>
+          </div>
+          <div class="col-md-3 ">
+            <label class="form-control-label libelle-recherche">Motif de rejet</label>
+            <ng-select
+              [items]="motifs" bindLabel="nomMotif"
+              placeholder="Selectionner" appendTo="body"
+              multiple="true" [(ngModel)]="motifsSearch"
+            ></ng-select>
+          </div>
+ 
+        <div class="col-md-3" style="padding-left: 0px;">
+          <label  class="form-control-label libelle-recherche">Msisdn</label>
+          <input
+                  type="text" class="input_design" name="msisdn"
+                    placeholder="Saisir Numéro"
+                    [(ngModel)]="etatMsisdn"
+                />
+        
+        </div>
+        <div class="col-md-3" style="padding-left: 0px;">
+          <label  class="form-control-label libelle-recherche">Vendeur</label>
+          <input
+                  type="text" class="input_design" name="vendeur"
+                    placeholder="Saisir login du Vendeur"
+                    [(ngModel)]="etatVendeur"
+                />
+        
+        </div>
+        <div class="col-md-1">
+          <div class="section">
+            <br>
+            <button class="button_recherche" (click)=" research()"><span class="OK">OK</span></button>
+          </div>
+        </div> 
+   
+     
+  </div>
+</div>
+<!--  -->
+<div class="second_div" *ngIf="cacherDetailDemande" >
+  <div class="table-responsive">
+    <div style="background-color: white; padding-bottom: 40px;">
+      <table class="table  table_demande" #listeDemandeSearch>
+        <thead>
+          <tr style="border-bottom: 2px solid black;">
+            <th><span>  <input style="margin-top: 0px;
+              margin-bottom: 0px;" class="check_table" type="checkbox" (click)="selectionnerAll()" [checked]="allDossier" > </span>
+            </th>
+            <th><span>Type </span></th>
+            <th><span>N° Dossier </span></th>
+            <th><span>N° Tél.</span></th>
+            <th><span>Nom du client</span></th>
+            <th><span>Vendeur</span></th>
+            <th><span style="padding-right:5px;">Reçu le</span><i class="fa fa-sort-desc" (click)="trieDemandeDateCreation()"  style=" font-size: 15px; cursor:pointer" aria-hidden="true"></i></th>
+            <th><span style="padding-right:5px;">Mise à jour</span><i class="fa fa-sort-desc" (click)="trieDemandeDateMiseAjour()" style=" font-size: 15px; cursor:pointer" aria-hidden="true"></i></th>
+            <th><span>Par </span></th>
+            <th><span style="float: left; margin-top: 6px;">Etat</span>
+              <button class="dropdown menu-merge hidden-xs" style="background-color: black;border: none;  width: 30px;height: 30px;">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">       
+                  <span class="fa fa-ellipsis-h" style="color: white;font-size: 20px;"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li (click)="exportToCsv()" ><a>Exporter CSV</a></li>
+                  <li (click)="exportToExcel()"><a >Exporter Excel</a></li>
+                  <li (click)="print()"><a>Imprimer</a></li>
+                </ul>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let p of demandes | paginate: { itemsPerPage: 10, currentPage: p }" style="position: center; cursor: pointer" >            
+            <td >
+              <input [checked]="p.selectionner" style="margin-top: 0px; margin-bottom: 0px;" class="check_table" type="checkbox" (click)="changeEtat(p)" >
+            </td>
+            <td (click)="ouvrirDemande(p.id, p.operation)" [ngStyle]="{'color':getColor(p.operation)}">{{ getOperationLabelle(p.operation) }}<span *ngIf="p.avecOM==true">+OM</span></td>
+            <td (click)="ouvrirDemande(p.id, p.operation)">
+              <span>{{p.referenceFacture}}</span>
+            </td>
+            <td (click)="ouvrirDemande(p.id, p.operation)" >{{ p.msisdn }}</td>
+            <td (click)="ouvrirDemande(p.id, p.operation)">{{ p.prenom + " " + p.nom }}</td>
+            <td (click)="ouvrirDemande(p.id, p.operation)">{{ p.creeParUsername }}</td>
+            <td (click)="ouvrirDemande(p.id, p.operation)">{{ p.dateRecu }}</td>
+            <td  (click)="ouvrirDemande(p.id, p.operation)">{{!p.dateModification?p.dateRecu:p.dateModification }}</td>
+            <td (click)="ouvrirDemande(p.id, p.operation)">{{p.modifieePar}}</td>              
+            <td>
+              <span *ngIf="p.etat != 'valider' && p.etat != 'encours_de_creation' && p.etat != 'echec' && p.etat != 'invalider'"
+              style=" float: left; margin-right: 10px ;background-color: #999999; opacity: 0.4;color: black" type="button "
+              class="label label-rounded " 
+            >{{ getOriginalEtat(p.etat)}}</span>
+              <span *ngIf="p.etat === 'encours_de_creation' || p.etat === 'echec'"
+                style=" float: left; margin-right: 10px ;background-color: #32c832; opacity: 0.4;color: black" type="button "
+                class="label label-rounded " 
+              >{{getOriginalEtat(p.etat)}}</span>
+              <span *ngIf="p.etat === 'invalider'" 
+              style=" float: left; margin-right: 10px ;background-color: #cd3c14; opacity: 0.4;color: black" type="button "
+              class="label label-rounded " 
+            >{{getOriginalEtat(p.etat)}}</span>
+                <span *ngIf="p.etat === 'valider'" 
+                style=" float: left; margin-right: 10px ;background-color: #8ca0e0; opacity: 0.4;color: black" type="button "
+                class="label label-rounded " 
+              >{{getOriginalEtat(p.etat)}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin: 0 auto; width: 100%; text-align: center;">
+        <pagination-controls
+          previousLabel=""  nextLabel=""
+          (pageChange)="p = $event" directionLinks="true" autoHide="true"
+          responsive="true" 
+        ></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+          
+<div class="panel-body bg-light" *ngIf="rechargerInfoDemande && !cacherDetailDemande">
+  <app-detail-demande [typePieces]="typePieces"  [typeEtats]="etatdossiers"  [demandeId]="demandeId" [motifs]="motifs" [typeCommentaires]="typeCommentaires" [typedossiers]="typedossiers" (newItemEvent)="addItem($event)"></app-detail-demande>
+</div>
+
+<div class="table-responsive" style="display: none;">
+  <div style="background-color: white; padding-bottom: 40px;" id="impressionDemande">
+    <table class="table  table_demande" #listeDemandeSearch>
+      <thead>
+        <tr style="border-bottom: 2px solid black;">
+          <th>
+            <span><input style="margin-top: 0px; margin-bottom: 0px;" class="check_table" type="checkbox"></span>
+          </th>
+          <th><span>Type </span></th>
+          <th><span>N° Dossier </span></th>
+          <th><span>N° Tél.</span></th>
+          <th><span>Nom du client</span></th>
+          <th><span>Vendeur</span></th>
+          <th><span>Emis le</span></th>
+          <th><span>Mise à jour</span></th>
+          <th><span>Par </span></th>
+          <th>
+            <span style="float: left; margin-top: 6px;">Etat</span>
+            <button class="dropdown menu-merge hidden-xs" style="background-color: black;border: none;  width: 30px;height: 30px;">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">       
+                <span class="fa fa-ellipsis-h" style="color: white;font-size: 20px;"></span>
+              </a>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of demandes">
+          <td>
+            <input style="margin-top: 0px; margin-bottom: 0px;" class="check_table" type="checkbox" >
+          </td>
+          <td [ngStyle]="{'color':getColor(p.operation)}">{{ getOperationLabelle(p.operation) }}</td>
+          <td (click)="ouvrirDemande(p.id, p.operation)">
+            <span  style="position: center; cursor: pointer">{{p.referenceFacture}}</span>
+          </td>
+          <td>{{ p.msisdn }}</td>
+          <td>{{ p.prenom + " " + p.nom }}</td>
+          <td>{{ p.creeParUsername }}</td>
+          <td>{{ p.dateCreation}}</td>
+          <td>{{ p.dateModification }}</td>
+          <td>{{ p.dateRecu }}</td>
+          <td>
+            
+            <span *ngIf="p.etat === 'encours_de_creation' || p.etat === 'echec'"
+              style=" float: left; margin-right: 10px ;background-color: #32c832; opacity: 0.4;color: black" type="button "
+              class="label label-rounded " 
+            >{{getOriginalEtat(p.etat)}}</span>
+
+            <span *ngIf="p.etat === 'invalider'" 
+            style=" float: left; margin-right: 10px ;background-color: #cd3c14; opacity: 0.4;color: black" type="button "
+            class="label label-rounded " 
+          >{{getOriginalEtat(p.etat)}}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>  
+</div>
+

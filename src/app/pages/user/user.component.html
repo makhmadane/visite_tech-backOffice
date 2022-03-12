@@ -1,0 +1,465 @@
+
+  <div   class="modal fade modal" id="addAdminBySuperadminModal" tabindex="-1" role="dialog" aria-labelledby="addAdminBySuperadminModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h5 style=" display: contents;" class="modal-title" id="addAdminBySuperadminModalLabel">Création d'un utilisateur</h5>
+          <button type="button button_header" class="close" data-dismiss="modal" aria-label="Close">
+            <span style="font-size: 30px;color: white;" aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="overflow: scroll; height: 450px;">
+          <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            <div>
+
+            <!-- <div class="form-group col-sm-12 center">
+                <div class="fileupload fileupload-new admin-form" data-provides="fileupload">
+                  <div class="fileupload-preview thumbnail mb5">
+                    <img [src]="user.photo ? sanitizer.bypassSecurityTrustUrl(user.photo) : avatar" />
+                  </div>
+                  <span class="button btn-system btn-file btn-block ph5">
+                    <span ngClass="{'fileupload-new':!user.photo, 'fileupload-exists':user.photo}">{{ user.photo ? "Changer Photo" : "Ajouter Photo" }}</span>
+                    <input type="file" id="file_document1" (change)="onImageChange($event)" accept="image/*" />
+                  </span>
+                </div>
+              </div>-->
+              
+              <div class="form-group col-sm-6 ">
+                <label for="username" class="form-control-label">Identifiant</label>
+               
+                  
+                    <input type="text" id="username" class="input_design"  name="username" [(ngModel)]="form.username" required minlength="3" maxlength="20" #username="ngModel" readonly />
+                   
+              
+                <div class="alert-danger" *ngIf="f.submitted && username.invalid">
+                  <div *ngIf="username.errors.required">Login obligatoire</div>
+                  <div *ngIf="username.errors.minlength">
+                    La taille du username doit être supérieur à 3 caractères!
+                  </div>
+                  <div *ngIf="username.errors.maxlength">
+                    La taille du username doit être inférieur à 20 caractères!
+                  </div>
+                </div>  
+              </div>
+             
+              <div class="form-group col-md-6 ">
+                <label class="form-control-label" for="role_libelleModule">Type Utilisateur</label>
+                <div class="section">
+                  <label class="field prepend-icon">
+                    <ng-select
+                      [items]="typeUsers" bindLabel="name" name="typeUser"
+                      placeholder="Selectionner"
+                      appendTo="body" 
+                      [(ngModel)]="selectedTypeUser" required #role="ngModel"
+                      required
+                    ></ng-select>
+                     
+                  </label>
+                </div>
+              </div>    
+              <div class="form-group col-sm-6 ">
+                <label class="form-control-label" for="prenom">Prénom</label>
+                
+                  
+                    <input type="text" id="prenom" class="input_design" name="prenom" [(ngModel)]="form.prenom" required #prenom="ngModel" />
+                  
+            
+                <div class="alert-danger" *ngIf="f.submitted && prenom.invalid">
+                  <div *ngIf="prenom.errors.required">*Prénom obligatoire</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6 ">
+                <label class="form-control-label" for="nom">Nom</label>
+                
+                    <input type="text" id="nom" class="input_design" name="nom" [(ngModel)]="form.nom" required #nom="ngModel" />
+                   
+                <div class="alert-danger" *ngIf="f.submitted && nom.invalid">
+                  <div *ngIf="nom.errors.required">*Nom obligatoire</div>
+                </div>
+              </div>
+              <div class="form-group col-md-6 ">
+                <label class="form-control-label" for="telephone">Téléphone</label>
+               
+                    <input type="tel" id="telephone" class="input_design" name="telephone" [(ngModel)]="form.telephone" required #telephone="ngModel" />
+                    
+                <div class="alert-danger" *ngIf="f.submitted && telephone.invalid">
+                  <div *ngIf="telephone.errors.required">*Téléphone obligatoire</div>
+                </div>
+              </div>
+              <div class="form-group col-md-6 ">
+                <label class="form-control-label" for="contact">Numéro de contact</label>
+                
+                    <input type="tel" id="contact" class="input_design" name="contact" [(ngModel)]="form.contact" required #contact="ngModel" />
+                    
+              </div>
+
+                            
+           
+              <div class="form-group col-sm-6 ">
+                <label for="email" class="form-control-label">Email</label>
+               
+                    <input type="email" id="email" class="input_design"  name="email" [(ngModel)]="form.email"  minlength="3" #email="ngModel" />
+                     
+              </div>
+
+              <div class="form-group col-sm-6 ">
+                <label class="form-control-label" for="adresse">Adresse</label>
+                
+                    <input type="text" class="input_design" id="adresse" name="adresse" [(ngModel)]="form.adresse" required #adresse="ngModel" />
+                   
+                <div class="alert-danger" *ngIf="f.submitted && adresse.invalid">
+                  <div *ngIf="adresse.errors.required">*Adresse obligatoire</div>
+                </div>
+              </div>
+           
+
+              <div class="form-group col-md-6 ">
+                <label class="form-control-label" for="role_libelleModule">Roles</label>
+                <div class="section">
+                  <label class="field prepend-icon">
+                    <ng-select
+                      [items]="roles" bindLabel="name" name="role"
+                      placeholder="Selectionner role"
+                      appendTo="body" (change)="getValues($event)"
+                      [(ngModel)]="selectedRole" required #role="ngModel"
+                    ></ng-select>
+                  </label>
+                </div>
+              </div> 
+
+              <div class="form-group col-md-6 " *ngIf="isRevendeur">
+                <label class="form-control-label" for="imsi">Imsi</label>
+                
+                    <input 
+                      type="text" class="input_design" name="imsi" 
+                      id="imsi" [(ngModel)]="form.imsi" #imsi="ngModel"
+                    />
+                 
+              </div>
+              <!--
+              <div class="form-group col-md-6 " *ngIf="isRevendeur">
+                <label class="form-control-label" for="iccId">Icc ID</label>
+               
+                    <input 
+                      type="text" class="input_design" name="iccId" 
+                      id="iccId" [(ngModel)]="form.iccId" #imsi="ngModel"
+                    />
+                  
+              </div>-->
+              <!--<div class="form-group col-md-6 "  *ngIf="isRevendeur">
+                <label class="form-control-label" for="role_libelleModule">Agences</label>
+                <div class="section">
+                  <label class="field prepend-icon">
+                    <ng-select
+                      [items]="agences" bindLabel="codeAgence" name="agence"
+                      placeholder="Selectionner Agence"
+                      appendTo="body" 
+                      [(ngModel)]="selectedAgence" required #agence="ngModel"
+                    ></ng-select>
+                  </label>
+                </div>
+              </div> -->
+              <div class="form-group col-md-6 " *ngIf="isSelectionRole">
+                <label class="form-control-label" for="profils">Profils</label>
+                <div class="section">
+                  <label class="field prepend-icon">
+                    <ng-select
+                      [items]="profilsRoles" bindLabel="name" name="profil" 
+                      (change)="getSelectProfils($event)" multiple="true"
+                      placeholder="Selectionner profils" appendTo="body"
+                      [(ngModel)]="selectedProfils" #profil="ngModel"
+                    ></ng-select>
+                  </label>
+                </div>
+              </div>
+              <div class="form-group col-md- " *ngIf="isRevendeur">
+                <label class="form-control-label" for="operations">Operations</label>
+                <div class="section">
+                  <label class="field prepend-icon">
+                    <div style="margin-bottom: 5px;" class="col-xs-4" *ngFor="let op of operations">
+                      <input type="text" readonly class="form-control" [value]="op"/>
+                    </div>
+                    <br>
+                  </label>
+                </div>
+              </div>
+              <div style="background-color: white; border: none;"  class="modal-footer">
+                <div style="margin-top: 30px;" class="col-md-12 col-md-offset-6">
+                  <button data-dismiss="modal" aria-label="Close"   id="save-entity" type="button" class="btn col-md-3 annuler_modal ">
+                    &nbsp;<span >Annuler</span>
+                  </button>
+                  <button aria-label="Close" type="submit" id="save-entity" class="btn col-md-3 valider_modal"
+                  [style.background-color]="f.form.invalid ? '#dddddd' : '#ff7900'" [style.border]="f.form.invalid ? '2px solid #dddddd' : ' 2px solid #ff7900'" >
+                    &nbsp;<span>{{ user.id ? "Modifier" : "Créé" }}</span>
+                  </button>
+               
+                </div>
+              </div>
+            
+            </div>
+          </form>
+          <!--<form name="editForm" role="form" (ngSubmit)="insertData()" #editForm="ngForm">
+            <div>
+              <div class="form-group col-md-6 center">
+                <label class="form-control-label" for="field_libelleModule">Nom du rôle</label>
+                
+                  
+                    <input
+                      #name="ngModel" type="text" class="input_design" name="name"
+                      id="field_libelleModule" [(ngModel)]="role.name"
+                    />
+                   
+              
+                
+              </div>
+              <div class="form-group col-md-6 center">
+                <label class="form-control-label" for="field_libelleModule">Code du rôle</label>
+                 
+                   
+                      <input
+                        #codeRole="ngModel" type="text" class="input_design" name="codeRole"
+                        id="field_libelleModule" [(ngModel)]="role.codeRole"
+                      />
+                      
+                 
+               
+                </div>
+                <div style="background-color: white; border: none;"  class="modal-footer">
+                  <div style="margin-top: 30px;" class="col-md-12 col-md-offset-6">
+                    <button data-dismiss="modal" aria-label="Close"   id="save-entity" type="button" class="btn col-md-3 annuler_modal ">
+                      &nbsp;<span >Annuler</span>
+                    </button>
+                    <button aria-label="Close" type="submit" id="save-entity" class="btn col-md-3 valider_modal" [disabled]="editForm.form.invalid" >
+                      &nbsp;<span>{{ role.id? "Modifier" : "Créé" }}</span>
+                    </button>
+                 
+                  </div>
+                </div>
+                
+            </div>
+          </form>-->
+         
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="first_div "  id="main-container">
+  <span class="Dashboard-Liste-do">
+    <span class="text-style-1">Dashboard</span><span class="text-style-2">\</span>Liste Utilisateurs<span class="text-style-2">\</span>
+    <span (click)="onOpenModal('add', 'add')"  style="cursor: pointer;" class="fa fa-plus-square button_add"></span>
+  </span>
+  <!--routerLink="/user-edit"-->
+  <div>
+     <span class="Liste-des-dossiers" style="display: inline; float: left;">
+    Liste des utilisateurs  
+    </span> 
+    
+    <input
+    type="text" class="input_design" name="msisdn"
+      placeholder="Recherche..."
+      [(ngModel)]="search" class="col-md-3"
+    />
+
+  </div>
+ 
+
+
+  </div>
+
+  <div class="table-responsive" style="margin-left: 20px;margin-right: 50px; margin-top: 20px;">
+    <div style="background-color: white; padding-bottom: 40px;">
+      <table class="table  table_demande" #listeDemandeSearch>
+        <thead>
+          <tr style="border-bottom: 2px solid black;">
+            <th><span>  <input style="margin-top: 0px;
+                margin-bottom: 0px;" class="check_table" type="checkbox" (click)="selectionnerAll()" [checked]="allDossier" > </span>
+            </th>
+            <th><span>Photo </span></th>
+            <th><span>Nom </span></th>
+            <th><span>Prenom </span></th>
+            <th><span>Numéro vendeur </span></th>
+            <th><span>Numéro contact </span></th>
+            <!--<th><span>Email </span></th>-->
+            <th><span>Login </span></th>
+            <th><span>Roles </span></th>
+            <th><span>Etat </span></th>
+            <th><span></span></th>
+            <th>
+              <button class="dropdown menu-merge hidden-xs" style="background-color: white;border: none;  width: 30px;height: 30px;">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">       
+             
+                  
+                  <p class="fa fa-ellipsis-h" style="color:black;font-size: 20px;"></p>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li (click)="exportToCsv()"><a>Exporter CSV</a></li>
+                  <li (click)="exportToExcel()"><a >Exporter Excel</a></li>
+                  <li (click)="print()"><a>Imprimer</a></li>
+                </ul>
+              </button>
+            </th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of users|userFiltre:search|paginate:{ itemsPerPage: 10, currentPage: p }">
+            <td >
+                        
+              <input [checked]="p.selectionner" style="margin-top: 0px;
+              margin-bottom: 0px;" class="check_table" type="checkbox" (click)="changeEtat(p)" >
+           
+          
+          </td>
+          <td><img [src]="urlImage(p.photo)" style="height: 40px;width: 40px; border-radius: 50%;" /></td>
+                    <td>{{p.nom}}</td>
+                    <td>{{p.prenom}}</td>
+                    <td>{{p.telephone}}</td>
+                    <td>{{p.contact}}</td>
+                    <!--<td>{{p.email}}</td>-->
+                    <td>{{p.username}}</td>
+                    <td><div ><span>{{ p.role.name }}</span></div></td>
+                    <td *ngIf="p.status==0" style="color:#32c832">
+                    Activé
+                    </td>
+                    <td *ngIf="p.status==-1" style="color:#726e6d">
+                     Désactivé
+                    </td>
+                    <td *ngIf="p.status==2" style="color:#cd3c14">
+                      Cloturé
+                     </td>
+                    
+                    <td>
+                      <div class="btn-group flex-btn-group-container">
+                        <span [hidden]="p.username==this.uinfo.username" (click)="editerUser(p.id)"  class="fa fa-pencil icon_table" style="margin-right: 20px ;color:#4a4a4a"  data-toggle="tooltip" data-placement="top" title="Modifier"></span>
+                        <span (click)=" alertReinstialisation(p.id)" class="fa fa-mail-reply-all" style="margin-right: 10px ;color:#d0021b" data-toggle="tooltip" data-placement="top" title="Réinitialiser"></span>
+            
+                      </div>
+                                      
+                    </td>
+
+                    <td >
+                      
+                    
+                      <button class="dropdown menu-merge hidden-xs" style="background-color: white;border: none;  width: 30px;height: 30px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">       
+                     
+                          
+                          <p class="fa fa-ellipsis-h" style="color:black;font-size: 20px;"></p>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li  *ngIf="p.status!=0"><a  (click)="ActiverUser(p.id)">Activer</a></li>
+                            <li  *ngIf="p.status!=-1"><a  (click)="DescativeUser(p.id)">Désactiver</a></li>
+                            <li  *ngIf="p.status!=2"><a  (click)="clotureUser(p.id)" >Clôturer</a></li>
+                            
+                        </ul>
+                      </button>
+
+                    </td>
+
+           
+          </tr>
+        </tbody>
+        <tfoot>
+          
+        </tfoot>
+      </table>
+      <div style="margin: 0 auto;
+      width: 100%; text-align: center;">
+        <pagination-controls previousLabel=""  nextLabel=""
+        (pageChange)="p = $event" directionLinks="true" autoHide="true"
+        responsive="true" 
+      ></pagination-controls>
+      </div>
+    
+    </div>
+  
+   
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="table-responsive" style="margin-left: 20px;margin-right: 50px; margin-top: 20px;" style="display: none;" >
+    <div style="background-color: white; padding-bottom: 40px;"  id="impressionDemande">
+      <table class="table  table_demande" #listeDemandeSearch>
+        <thead>
+          <tr style="border-bottom: 2px solid black;">
+            <th><span>  <input style="margin-top: 0px;
+                margin-bottom: 0px;" class="check_table" type="checkbox" (click)="selectionnerAll()" [checked]="allDossier" > </span>
+            </th>
+            <th><span>Photo </span></th>
+            <th><span>Nom </span></th>
+            <th><span>Prenom </span></th>
+            <th><span>Numéro vendeur </span></th>
+            <th><span>Numéro contact </span></th>
+            <!--<th><span>Email </span></th>-->
+            <th><span>Login </span></th>
+            <th><span>Roles </span></th>
+            <th><span>Etat </span></th>
+           
+           
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of users|userFiltre:search|paginate:{ itemsPerPage: 10, currentPage: p }">
+            <td >
+                        
+              <input [checked]="p.selectionner" style="margin-top: 0px;
+              margin-bottom: 0px;" class="check_table" type="checkbox" (click)="changeEtat(p)" >
+           
+          
+          </td>
+          <td><img [src]="urlImage(p.photo)" style="height: 40px;width: 40px; border-radius: 50%;" /></td>
+                    <td>{{p.nom}}</td>
+                    <td>{{p.prenom}}</td>
+                    <td>{{p.telephone}}</td>
+                    <td>{{p.contact}}</td>
+                    <!--<td>{{p.email}}</td>-->
+                    <td>{{p.username}}</td>
+                    <td><div ><span>{{ p.role.name }}</span></div></td>
+                    <td *ngIf="p.status==0" style="color:#32c832">
+                    Activé
+                    </td>
+                    <td *ngIf="p.status==-1" style="color:#726e6d">
+                     Désactivé
+                    </td>
+                    <td *ngIf="p.status==2" style="color:#cd3c14">
+                      Cloturé
+                     </td>
+                    
+                   
+
+                 
+
+           
+          </tr>
+        </tbody>
+        <tfoot>
+          
+        </tfoot>
+      </table>
+ 
+    
+    </div>
+  
+   
+  </div>
+

@@ -1,0 +1,168 @@
+
+
+  <div   class="modal fade modal" id="addAdminBySuperadminModal" tabindex="-1" role="dialog" aria-labelledby="addAdminBySuperadminModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h5 style=" display: contents;" class="modal-title" id="addAdminBySuperadminModalLabel">Création d'un rôle</h5>
+          <button type="button button_header" class="close" data-dismiss="modal" aria-label="Close">
+            <span style="font-size: 30px;color: white;" aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form name="editForm" role="form" (ngSubmit)="insertData()" #editForm="ngForm">
+            <div>
+              <div class="form-group col-md-12 center">
+                <label class="form-control-label" for="field_libelleModule">Nom Commentaire</label>
+                
+                  
+                    <input
+                      #name="ngModel" type="text" class="input_design" name="name"
+                      id="field_libelleModule" [(ngModel)]="tp.commentaire" required
+                    />
+                   
+              
+                
+              </div>
+              
+                <div style="background-color: white; border: none;"  class="modal-footer">
+                  <div style="margin-top: 30px;" class="col-md-12 col-md-offset-6">
+                    <button data-dismiss="modal" aria-label="Close"   id="save-entity" type="button" class="btn col-md-3 annuler_modal ">
+                      &nbsp;<span >Annuler</span>
+                    </button>
+                    <button aria-label="Close" type="submit" id="save-entity"  class="btn col-md-3 valider_modal" [disabled]="editForm.form.invalid" [style.background-color]="editForm.form.invalid ? '#dddddd' : '#ff7900'" [style.border]="editForm.form.invalid ? '2px solid #dddddd' : ' 2px solid #ff7900'"  >
+                      &nbsp;<span>{{ tp.id? "Modifier" : "Créé" }}</span>
+                    </button>
+                 
+                  </div>
+                </div>
+                
+            </div>
+          </form>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  
+<div class="first_div " id="main-container">
+  <span class="Dashboard-Liste-do">
+    <span class="text-style-1">Parametrage</span><span class="text-style-2">\</span>Liste Des types de Commentaire<span class="text-style-2">\</span>
+    <span  (click)="onOpenModal('add', 'add')" style="cursor: pointer;" class="fa fa-plus-square button_add"></span>
+  </span>
+  <!--routerLink="/ka_roleUpdate"-->
+  <span class="Liste-des-dossiers">
+    Liste des commentaires
+  </span>
+  
+
+  </div>
+
+  <div class="table-responsive" style="margin-left: 20px;margin-right: 50px; margin-top: 20px;">
+    <div style="background-color: white; padding-bottom: 40px;">
+      <table class="table  table_demande" #listeDemandeSearch>
+        <thead>
+          <tr style="border-bottom: 2px solid black;">
+            <tr style="border-bottom: 2px solid black;">
+              <th><span>  <input style="margin-top: 0px;
+                margin-bottom: 0px;" class="check_table" type="checkbox" (click)="selectionnerAll()" [checked]="allDossier" > </span>
+            </th>
+           
+            <th><span>Nom commentaire</span></th>
+          
+            <th>
+              <button class="dropdown menu-merge hidden-xs" style="background-color: white;border: none;  width: 30px;height: 30px;">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">       
+             
+                  
+                  <p class="fa fa-ellipsis-h" style="color:black;font-size: 20px;"></p>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li (click)="exportToCsv()" ><a>Exporter CSV</a></li>
+                  <li (click)="exportToExcel()" ><a >Exporter Excel</a></li>
+                  <li (click)="print()"><a>Imprimer</a></li>
+                 
+                </ul>
+              </button>
+            </th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of tps | paginate: { itemsPerPage: 5, currentPage: p }">
+            <td >
+                        
+              <input [checked]="p.selectionner" style="margin-top: 0px;
+              margin-bottom: 0px;" class="check_table" type="checkbox" (click)="changeEtat(p)" >
+           
+          
+          </td>
+          <td>{{ p.commentaire}}</td>
+         
+            <td>
+              <div class="btn-group flex-btn-group-container options">
+                <span  (click)="editerRole(p.id)"   class="fa fa-pencil icon_table" style="margin-right: 20px ;color:#4a4a4a"></span>
+                <span (click)="deleteSupprimer(p.id)" class="fa fa-trash-o icon_table" style="margin-right: 10px ;color:#d0021b"></span>
+                
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          
+        </tfoot>
+      </table>
+  
+      <div style="margin: 0 auto;
+      width: 100%; text-align: center;">
+        <pagination-controls  previousLabel=""  nextLabel=""
+        (pageChange)="p = $event" directionLinks="true" autoHide="true"
+        responsive="true" 
+      ></pagination-controls>
+      </div>
+    </div>
+  
+   
+  </div>
+
+  
+
+
+
+
+
+
+  <div class="table-responsive" style="display: none;">
+    <div style="background-color: white; padding-bottom: 40px;" id="impressionDemande">
+      <table class="table  table_demande" #listeDemandeSearch>
+        <thead>
+          <tr style="border-bottom: 2px solid black;">
+           
+          
+            
+          <th><span>Nom commentaire</span></th>
+            
+           
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let p of tps " >
+            
+       
+            
+            
+            <td>{{ p.commentaire }}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          
+        </tfoot>
+      </table>
+
+    
+    </div>
+  
+   
+  </div>

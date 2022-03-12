@@ -1,0 +1,110 @@
+
+    <div  style="width: 100%;height: 100%;">
+      
+      <div class="left_side">
+        
+      </div>
+      <div class="right_side">
+        <div class="row logo_title">
+          <img class="logo_right_side" src="../../assets/img/LogoVT.png">
+        </div>
+
+        <div class="row" style=" margin-left: auto;
+        margin-right: auto; width: 360px;">
+          <div class="col-xs-12 col-sm-12">
+            <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate class="loginForm" autocomplete="off">
+              <div class="form-group">
+                
+                <div class="input-group">
+                  <span class="input-group-addon  span_icon">
+                    <i class="fa fa-user icon_login" ></i>
+                  </span>
+                  <input
+                  name="username" [(ngModel)]="form.username" #username="ngModel"
+                  type="text" class="form-control email input_login"
+                  placeholder="Identifiant" required
+                >
+                <div style="color:#cd3c14" role="alert" *ngIf="f.submitted && username.invalid">
+                  Login obligatoire!
+                 </div> 
+                  
+                    
+                </div>
+               
+              </div>
+              <br>
+              <div class="form-group">
+                <div class="pwdMask">
+                  
+                  <div class="input-group">
+                    <span class="input-group-addon  span_icon">
+                      <i class="fa  fa-lock icon_login" ></i>
+                    </span>
+                    
+                    <input
+                    name="password" [(ngModel)]="form.password"
+                    #password="ngModel" type="password" class="form-control password input_login" 
+                    placeholder="Mot de passe" required
+                  >
+                  <div style="color:#cd3c14"  role="alert" *ngIf="f.submitted && password.invalid" >
+                    <div *ngIf="password.errors.required">Mot de passe obligatoire !</div>
+                    <div *ngIf="password.errors.minlength">
+                      Le mot de passe doit contenir au moins 6 caractères
+                    </div>
+                  </div>
+                      
+                 
+                </div>
+                 
+                </div>
+                
+                
+              </div>
+
+
+              <div class="row remember-row">
+                <div class="form-group">
+                  <button type="submit"  class="submit_login" style="margin-top: 30px;">Se connecter</button>
+                </div>
+              </div> 
+              
+              
+
+          </form>
+          </div>
+          </div>
+       <!-- <div  class="div_login" >
+          
+            
+            <div class="input-group">
+              <span class="input-group-addon  span_icon">
+                <i class="fa fa-user icon_login" ></i>
+              </span>
+              
+              <input type="text" class="input_login" />
+                
+            </div>
+         
+          <br>
+          <br>
+          
+           
+            <div class="input-group">
+              <span class="input-group-addon  span_icon">
+                <i class="fa  fa-lock icon_login" ></i>
+              </span>
+              
+              <input type="text" class="input_login" />
+                
+           
+          </div>
+            <button type="submit"  class="submit_login" style="margin-top: 70px;">Se connecter</button>
+        </div>-->
+        
+
+        
+      </div>
+     
+    </div> <!-- ./row -->
+  
+

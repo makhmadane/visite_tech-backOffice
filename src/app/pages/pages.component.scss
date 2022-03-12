@@ -1,0 +1,123 @@
+.navbar {
+    overflow: hidden;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    padding: 0 0 20px;
+    background-color: #000000;
+    color:#ffffff;
+  }
+  .sidebar-menu > li > ul > li > a .active{
+    color: #ff7900;
+    background-color: orange;
+  }
+.Group-37 {
+    width: 20px;
+    margin: -25px 0px 5px 0;
+    display:inline-block
+
+
+  }
+  .icon_orange {
+    width: 100px;
+    margin: -25px 0px 5px 0;
+    display: inline-block;
+    background-color: white;
+
+
+  }
+  .Kaabu-Mobile {
+    width: 78px;
+    height: 56px;
+    margin: 9px 0 0 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color:#ffffff;;
+    display:inline-block;
+  }
+  .user_nom_prenom{
+    margin-left: 10px;
+    font-family: 'Roboto', sans-serif;
+ 
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+  .bar_search {
+    width: 220px;
+    height: 40px;
+    border: #000000;
+    margin-top:10px;
+    padding: 10px 20px;
+    background-color: #333333;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+  }
+  input:focus {
+    border:none;
+    background-color: #d3c7c7;
+  } 
+  .icon_user {
+    margin: 10px 50px 0 50px;
+    font-size: 20px;
+  }
+
+  .nano{
+    background-color: #ffffff;
+  }
+
+  .icone_side{
+    float: left;
+    top: 0;
+    line-height: 37px;
+    width: 40px;
+    text-align: center;
+    padding-left: 22px;
+    margin-top: 9px;
+  }
+  .icone_menu{
+   width: 19px;
+  }
+  .title_sidebar{
+    color: #ffffff;
+    margin-left: 20px;
+  }
+ 
+  .sidebar-menu > li > a > span:nth-child(1) {
+    float: left;
+    top: 0;
+    line-height: 37px;
+    width: 38px;
+    font-size: 15px;
+    text-align: center;
+    padding-left: 22px;
+}
+
+.side_title{
+
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0.04px;
+  color:white;
+}
+
+
+.bar_search:focus{
+
+  outline: none !important;
+  border: solid 2px black;
+
+
+}
+

@@ -1,0 +1,78 @@
+<div class="first_div " id="main-container">
+  <span class="Dashboard-Liste-do">
+    <span class="text-style-1">Dashboard</span><span class="text-style-2">\</span>Imports des utilisateur<span class="text-style-2">\</span>
+  </span>
+  <span class="Liste-des-dossiers" style="display: inline-block; float:left;">Importation en masse</span>
+  <label for="" style="display: inline-block; float:left; margin-right: 10px; margin-top: 5px;" >Download format Excel </label> &nbsp; &nbsp;
+  <button type="button" class="btn col-md-2 valider" (click)="exportToExcel()" >
+    &nbsp;<span >Download</span>
+  </button>
+
+ 
+</div >
+<div>
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="">Ajouter des utilisateurs</label>
+      <pre><input type="file" class="form-control-file"  (change)="onFileChange($event)" accept=".csv"></pre>
+    </div>
+  </div>
+
+ 
+<div class="row" style="margin: 5px;">
+  <div class="form-group">
+    <div><label for="">Le fichier import (EN CSV) ne doit pas contenir plus de 1000 utilisateurs</label></div>
+    <div><label for="">Format (O: Obligatoire, F: Facultatif):</label></div>
+    <div><label for="">Pour  insertion et mise à jour (BACK OFFICE):<br/>&nbsp;&nbsp;&nbsp;&nbsp; username: O; typeuser: O;action: O;email:O; nom: O; prenom: O; roles: O; profils: O; telephone: O; contact: O; adresse: O; imsi: O</label></div>
+    <div><label for="">Pour de insertion et mise à jour (VENDEUR) :<br/>&nbsp;&nbsp;&nbsp;&nbsp;username: O; typeuser: O;action: O;email:O; nom: O; prenom: O; roles: O; profils: O; telephone: O; contact: O; adresse: O; imsi: F</label></div>
+    <div><label for=""><ul type="square"><li>typeuser peut avoir comme valeurs(externe,interne)</li><li>action peut avoir comme valeurs(creer,modifier,cloturer,activer,descativer)</li><li>roles peut avoir comme valeurs(<span *ngFor="let p of roles">{{p.name}},</span>) </li><li> profils peut avoir plusieurs valeurs séparés par //<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ul><span *ngFor="let p of profils"><li>{{p.codeProfil}} appartient au rôle {{p.role.name}} ,</li></span></ul> </li></ul></label>  </div>
+   
+
+  </div>
+ 
+  </div>
+</div>
+<div class="table-responsive" style="margin-left: 20px;margin-right: 50px; margin-top: 20px;">
+  <div style="background-color: white; padding-bottom: 40px;">
+    <table class="table  table_demande">
+      <thead>
+        <tr style="border-bottom: 2px solid black;">
+          <th><span>Username</span></th>
+          <th><span>Email</span></th>
+          <th><span>Nom</span></th>
+          <th><span>Prenom</span></th>
+          <th><span>Imsi</span></th>
+          <th><span>Roles</span></th>
+          <th><span>Profils</span></th>
+          <th><span>Telephone</span></th>
+          <th><span>contact</span></th>
+          <th><span>Adresse</span></th>
+          <th><span>Etat</span></th>
+          <th><span>Message</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of users ">
+          <td>{{p.username}}</td>
+          <td>{{p.email}}</td>
+          <td>{{p.nom}}</td>
+          <td>{{p.prenom}}</td>
+          <td>{{p.imsi}}</td>
+          <td>{{p.roles}}</td>
+          <td>{{p.profils}}</td>
+          <td>{{p.telephone}}</td>
+          <td>{{p.contact}}</td>
+          <td>{{p.adresse}}</td>
+          <td>
+            <i *ngIf="p.etat === 1" style="font-size: 15px; margin-right: 5px; color: #32c832;" class="fa fa-check"></i>
+            <i *ngIf="p.etat === -1"  style="font-size: 15px; margin-right: 5px; color: #cd3c14;" class="fa fa-close"></i>
+            <i *ngIf="p.etat === 0"  style="font-size: 15px; margin-right: 5px; color: #585655;" class="fa fa-rotate-left"></i>
+          </td>
+          <td>{{p.message}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>    
+
+
